@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import {Title,  Search, Characters} from './components/index.jsx'
+import * as dotenv from 'dotenv'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+dotenv.config()
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+
+    }
+  }
+})
 
 function App() {
+  const title = process.env.ENV === 'PROD' ? 'Hello Prod' : 'Hello Dev'
+  const years = ["19BBY", "57BBY"]
+  const names = ["Skywalker", "Kenobi"]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {/* <QueryClientProvider client={queryClient}/> */}
+        <Routes>
+          <Route path="/" element={<Title title={title}/>}  />
+          <Route path="/search" element={ <Search years={years} names={names} />} />
+          <Route path="/characters/:id" element={<Characters />}/>
+        </Routes>
+      {/* <QueryClientProvider/> */}
+    </BrowserRouter>
   );
 }
 
