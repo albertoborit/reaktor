@@ -1,8 +1,8 @@
-import Title from './title'
+import Main from './main'
 import Search from './searchinput'
 import Characters from './characters'
 export {
- Title,
+ Main,
  Search,
  Characters
 }
